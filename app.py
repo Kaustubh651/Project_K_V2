@@ -26,7 +26,13 @@ with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w") as tmp:
 # --- Summarizer Pipeline ---
 @st.cache_resource
 def get_summarizer():
-    return pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
+    from huggingface_hub import login
+    HUGGINGFACE_TOKEN = st.secrets["huggingface"]["huggingface_token"]
+    login(token=HUGGINGFACE_TOKEN)
+    return pipeline(
+        "summarization",
+        model="sshleifer/distilbart-cnn-12-6",
+    )
 
 summarizer = get_summarizer()
 
@@ -90,6 +96,7 @@ def upload_image_to_drive(image_url, file_name):
 
 # --- UI Setup ---
 st.set_page_config(page_title="📰 News Uploader", layout="centered")
+
 
 # --- Stylish UI ---
 st.markdown("""

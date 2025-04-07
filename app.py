@@ -13,7 +13,15 @@ import tempfile
 
 # --- SETTINGS ---
 SHEET_NAME = "Project@KI"
-CREDS_JSON = "gen-lang-client-0709660306-d66c48c393e4.json"
+# CREDS_JSON = "gen-lang-client-0709660306-d66c48c393e4.json"
+import json
+import tempfile
+
+with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w") as tmp:
+    creds_dict = dict(st.secrets["google_service_account"])  # Convert AttrDict to dict
+    json.dump(creds_dict, tmp)
+    tmp_path = tmp.name
+
 
 # --- Summarizer Pipeline ---
 @st.cache_resource
@@ -25,7 +33,7 @@ summarizer = get_summarizer()
 # --- Google Sheet Setup ---
 def setup_google_sheet():
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name(CREDS_JSON, scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name(tmp_path, scope)
     client = gspread.authorize(creds)
 
     try:
@@ -64,7 +72,7 @@ def upload_image_to_drive(image_url, file_name):
         f.write(img_data)
 
     scopes = ['https://www.googleapis.com/auth/drive']
-    creds = service_account.Credentials.from_service_account_file(CREDS_JSON, scopes=scopes)
+    creds = service_account.Credentials.from_service_account_file(tmp_path, scopes=scopes)
     drive_service = build('drive', 'v3', credentials=creds)
 
     file_metadata = {'name': file_name, 'mimeType': 'image/jpeg'}

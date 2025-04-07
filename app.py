@@ -26,7 +26,7 @@ with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w") as tmp:
 # --- Summarizer Pipeline ---
 @st.cache_resource
 def get_summarizer():
-    return pipeline("summarization", model="facebook/bart-large-cnn")
+    return pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
 
 summarizer = get_summarizer()
 

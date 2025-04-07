@@ -8,3 +8,4 @@ google-auth
 google-auth-oauthlib
 requests
 lxml_html_clean
+torch

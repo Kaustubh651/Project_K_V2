@@ -1,4 +1,5 @@
 import streamlit as st
+st.set_page_config(page_title="📰 News Uploader", layout="centered")
 from newspaper import Article
 from transformers import pipeline
 import gspread
@@ -95,7 +96,7 @@ def upload_image_to_drive(image_url, file_name):
     return image_drive_url
 
 # --- UI Setup ---
-st.set_page_config(page_title="📰 News Uploader", layout="centered")
+
 
 
 # --- Stylish UI ---

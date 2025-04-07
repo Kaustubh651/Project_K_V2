@@ -11,7 +11,7 @@ from googleapiclient.http import MediaFileUpload
 from google.oauth2 import service_account
 import os
 import tempfile
-
+from huggingface_hub import login
 # --- SETTINGS ---
 SHEET_NAME = "Project@KI"
 # CREDS_JSON = "gen-lang-client-0709660306-d66c48c393e4.json"
@@ -27,7 +27,6 @@ with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w") as tmp:
 # --- Summarizer Pipeline ---
 @st.cache_resource
 def get_summarizer():
-    from huggingface_hub import login
     HUGGINGFACE_TOKEN = st.secrets["huggingface"]["huggingface_token"]
     login(token=HUGGINGFACE_TOKEN)
     return pipeline(

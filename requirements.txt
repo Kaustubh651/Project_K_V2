@@ -8,4 +8,5 @@ google-auth
 google-auth-oauthlib
 requests
 lxml_html_clean
-torch
+torch==2.1.0+cpu
+--find-links https://download.pytorch.org/whl/torch_stable.html

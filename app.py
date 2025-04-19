@@ -192,7 +192,7 @@ if st.button("🚀 Process and Upload"):
 
             sheet, spreadsheet = setup_google_sheet()
             existing_rows = len(sheet.get_all_values())
-            news_id = 9663 + existing_rows - 1
+            news_id = 9800 + existing_rows - 1
 
             url_suffix = f"News{news_id}"
             deep_link_url = f"https://travclan.com/?screen_code=news_detail&news_id={url_suffix.replace('articleshow', '')}"
